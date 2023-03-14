@@ -1,4 +1,3 @@
-import { getByDisplayValue } from '@testing-library/react';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
@@ -41,7 +40,7 @@ class Tasks extends React.Component {
             return (
                 <li>
                     <input type="checkbox" id="check-task" name="check-task" onChange={this.props.checkOrUncheck}></input>
-                    <label for="check-task">{this.props.title}</label>
+                    <label htmlFor="check-task">{this.props.title}</label>
                 </li>
             );
         }
@@ -49,7 +48,7 @@ class Tasks extends React.Component {
             return (
                 <li>
                     <input type="checkbox" id="check-task" name="check-task" checked onChange={this.props.checkOrUncheck}></input>
-                    <label for="check-task">{this.props.title}</label>
+                    <label htmlFor="check-task">{this.props.title}</label>
                 </li>
             );
         }
