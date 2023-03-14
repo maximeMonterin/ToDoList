@@ -6,7 +6,7 @@ import './index.css';
 class Add extends React.Component {
     render() {
         return (
-            <button className="add" onClick={() => alert('clic')}>
+            <button class="add" onClick={() => alert('clic')}>
                 New Task
                 {/* TODO */}
             </button>
@@ -17,7 +17,7 @@ class Add extends React.Component {
 class Search extends React.Component {
     render() {
         return (
-            <input type="text" placeholder="Catégorie, Mots-clés..">
+            <input class="search" type="text" placeholder="Catégorie, Mots-clés..">
                 {/* TODO */}
             </input>
         );
@@ -47,7 +47,7 @@ class Tasks extends React.Component {
 
         if (this.props.isChecked === false) {
             return (
-                <li>
+                <li class="form-control">
                     <input type="checkbox" id="check-task" name="check-task" onChange={this.props.checkOrUncheck}></input>
                     <label htmlFor="check-task">{this.props.title}</label>
                 </li>
@@ -55,7 +55,7 @@ class Tasks extends React.Component {
         }
         else {
             return (
-                <li>
+                <li class="form-control">
                     <input type="checkbox" id="check-task" name="check-task" checked onChange={this.props.checkOrUncheck}></input>
                     <label htmlFor="check-task">{this.props.title}</label>
                 </li>
@@ -117,6 +117,7 @@ class App extends React.Component {
     }
 
     parseTasks() {
+        //LOCAL STORAGE A FAIRE A LA FIN
         /*let tabb = [];
         let tab = localStorage.getItem('tasks');
         tab = JSON.parse(tab);
@@ -155,7 +156,7 @@ class App extends React.Component {
                     <Header done={this.howMuchChecked()} all={this.state.tasks.length} />
                 </div>
 
-                <div>
+                <div class="corps">
                     {this.parseTasks()}
                 </div>
 

@@ -1,9 +1,64 @@
 header{
-    border-bottom: 0.5px solid;
-    border-color: black;
+    font-family: system-ui, sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+}
+
+body{
+    color: white;
+    background-color: #131416;
 }
 
 .app-footer{
-    border-top: 0.5px solid;
-    border-color: black;
+    margin-top: 15em;
+    display: flex;
+    justify-content: center;
 }
+
+.add, .search{
+    font-family: system-ui, sans-serif;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.corps{
+    margin-top: 10em;
+}
+
+.form-control {
+    font-family: system-ui, sans-serif;
+    font-size: 2rem;
+    font-weight: bold;
+    line-height: 1.1;
+    display: grid;
+    grid-template-columns: 1em auto;
+    gap: 0.5em;
+  }
+
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+    font: inherit;
+    width: 1.15em;
+    height: 1.15em;
+    border: 0.15em solid white;
+    border-radius: 0.15em;
+    transform: translateY(-0.075em);
+    display: grid;
+    place-content: center;
+  }
+
+  input[type="checkbox"]::before {
+    content: "";
+    width: 0.65em;
+    height: 0.65em;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1em 1em #e55039;
+    
+  }
+
+  input[type="checkbox"]:checked::before {
+    transform: scale(1);
+  }
