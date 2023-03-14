@@ -1,4 +1,4 @@
-# Getting Started with Create React App
+# Bienvenue sur le repo GitHub de ToDoGood
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
