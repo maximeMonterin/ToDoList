@@ -24,19 +24,28 @@ class Search extends React.Component {
     }
 }
 
-class Tasks extends React.Component {
-    constructor(props) {
-        super(props);
+// ========================================
 
-        this.state = {
-            isChecked: this.props.isChecked,
-            title: this.props.title,
-        }
-    }
+class Header extends React.Component {
 
     render() {
+        const title = 'Bienvenue sur ToDoGood !';
+        const task = "Tâches accomplies = " + this.props.done + " / " + this.props.all;
 
-        if (this.props.isChecked == false) {
+        return (
+            <header>
+                {title}
+                <br></br>
+                {task}
+            </header>
+        );
+    }
+}
+
+class Tasks extends React.Component {
+    render() {
+
+        if (this.props.isChecked === false) {
             return (
                 <li>
                     <input type="checkbox" id="check-task" name="check-task" onChange={this.props.checkOrUncheck}></input>
@@ -52,34 +61,6 @@ class Tasks extends React.Component {
                 </li>
             );
         }
-    }
-}
-
-// ========================================
-
-class Header extends React.Component {
-
-    render() {
-        const title = 'Bienvenue dans mon app de ToDoList !';
-        const task = "Prog = " + this.props.done + " / " + this.props.all;
-
-        return (
-            <header>
-                {title}
-                <br></br>
-                {task}
-            </header>
-        );
-    }
-}
-
-class Body extends React.Component {
-    render() {
-
-        return (
-            <div className="app-body">
-            </div>
-        );
     }
 }
 
@@ -132,12 +113,24 @@ class App extends React.Component {
             tasks: newTasks,
         })
 
+        localStorage.setItem('tasks', JSON.stringify(newTasks));
     }
 
     parseTasks() {
+        /*let tabb = [];
+        let tab = localStorage.getItem('tasks');
+        tab = JSON.parse(tab);
+
+        for(var element in tab){
+            tabb.push(<Tasks key={element} title={tab[element].title} isChecked={tab[element].isChecked} checkOrUncheck={() => this.checkOrUncheck(element)}/>);
+            console.log(element);
+        }
+
+        return(tabb);*/
+
         const reformattedTab = this.state.tasks.map((element, index) => <Tasks key={index} title={element.title} isChecked={element.isChecked} checkOrUncheck={() => this.checkOrUncheck(index)}/>);
 
-        return reformattedTab;
+        return(reformattedTab);
     }
 
     howMuchChecked() {
@@ -145,7 +138,7 @@ class App extends React.Component {
         var cpt = 0;
 
         for (let parcours = 0; parcours < this.state.tasks.length; ++parcours) {
-            if (this.state.tasks[parcours]["isChecked"] == true) {
+            if (this.state.tasks[parcours]["isChecked"] === true) {
                 ++cpt;
             }
         }
@@ -154,7 +147,6 @@ class App extends React.Component {
     }
 
     render() {
-        localStorage.setItem('tasks', JSON.stringify(this.state.tasks))
 
         return (
 
