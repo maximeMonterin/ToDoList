@@ -3,13 +3,61 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 
 
+class AddBar extends React.Component {
+    constructor() {
+        super();
+        
+        this.state = {
+          clicked: false
+        };
+        
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.setState({
+          clicked: true
+        });
+      }
+
+    render() {
+      return (
+        <div>
+            <input id="add-bar" className="search" type="text" placeholder="Titre de votre todo"/>
+            <button className="add" onClick={() => this.handleClick}>+</button>
+            {this.state.clicked ? this.props.addTab : null}
+        </div>
+      );
+    }  
+  }
+  
+
 class Add extends React.Component {
+    constructor() {
+        super();
+        
+        this.state = {
+          clicked: false
+        };
+        
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.setState({
+          clicked: true
+        });
+      }
+      
+
     render() {
         return (
-            <button class="add" onClick={() => alert('clic')}>
+            <div>
+                <button className="add" onClick={this.handleClick}>
                 New Task
-                {/* TODO */}
-            </button>
+                </button>
+                {this.state.clicked ? <AddBar addTab={this.props.addTab} /> : null}
+            </div>
         );
     }
 }
@@ -17,7 +65,7 @@ class Add extends React.Component {
 class Search extends React.Component {
     render() {
         return (
-            <input class="search" type="text" placeholder="Catégorie, Mots-clés..">
+            <input className="search" type="text" placeholder="Catégorie, Mots-clés..">
                 {/* TODO */}
             </input>
         );
@@ -47,7 +95,7 @@ class Tasks extends React.Component {
 
         if (this.props.isChecked === false) {
             return (
-                <li class="form-control">
+                <li className="form-control">
                     <input type="checkbox" id="check-task" name="check-task" onChange={this.props.checkOrUncheck}></input>
                     <label htmlFor="check-task">{this.props.title}</label>
                 </li>
@@ -55,7 +103,7 @@ class Tasks extends React.Component {
         }
         else {
             return (
-                <li class="form-control">
+                <li className="form-control">
                     <input type="checkbox" id="check-task" name="check-task" checked onChange={this.props.checkOrUncheck}></input>
                     <label htmlFor="check-task">{this.props.title}</label>
                 </li>
@@ -66,7 +114,7 @@ class Tasks extends React.Component {
 
 class Footer extends React.Component {
     addButton() {
-        return <Add />;
+        return <Add addTab={this.props.addTab}/>;
     }
 
     searchBar() {
@@ -103,6 +151,17 @@ class App extends React.Component {
                 { "title": "8.Pub", "isChecked": false },
                 { "title": "9.Feedback", "isChecked": false }],
         }
+    }
+
+    addToTab(){
+        console.log('test');
+        
+        let newTasks = this.state.tasks.slice();
+        newTasks.push({'title': document.getElementById('add-bar').value, 'isChecked': false});
+
+        this.setState({
+            tasks: newTasks,
+        })
     }
 
     checkOrUncheck(position){
@@ -156,12 +215,12 @@ class App extends React.Component {
                     <Header done={this.howMuchChecked()} all={this.state.tasks.length} />
                 </div>
 
-                <div class="corps">
+                <div className="corps">
                     {this.parseTasks()}
                 </div>
 
                 <div className="app-footer">
-                    <Footer />
+                    <Footer addTab={() => this.addToTab()}/>
                 </div>
             </div>
         );
