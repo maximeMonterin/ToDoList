@@ -1,6 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
+import poubelle from './images/poubelle-de-recyclage.png';
+import haut from './images/fleche-vers-le-haut.png';
+import bas from './images/fleche-vers-le-bas.png';
 
 
 class AddBar extends React.Component {
@@ -22,7 +25,7 @@ class AddBar extends React.Component {
     render() {
       return (
         <div>
-            <input id="add-bar" className="search" type="text" placeholder="Titre de votre todo"/>
+            <input id="add-bar" className="search" type="text" placeholder="Titre de votre task"/>
             <button className="add" onClick={this.handleClick}>
                 +
             </button>
@@ -65,7 +68,7 @@ class Add extends React.Component {
 class Search extends React.Component {
     render() {
         return (
-            <input className="search" type="text" placeholder="Catégorie, Mots-clés..">
+            <input className="search" type="text" placeholder="Recherche par mots-clés..">
                 {/* TODO */}
             </input>
         );
@@ -77,7 +80,7 @@ class Search extends React.Component {
 class Header extends React.Component {
 
     render() {
-        const title = 'Bienvenue sur ToDoGood !';
+        const title = 'Bienvenue sur ToDoGood';
         const task = "Tâches accomplies = " + this.props.done + " / " + this.props.all;
 
         return (
@@ -103,25 +106,17 @@ class Tasks extends React.Component {
       }
 
     render() {
-        console.log('Tasks', this.props)
-        if (this.props.isChecked === false) {
-            return (
-                <li className="form-control">
-                    <input type="checkbox" id="check-task" name="check-task" onChange={this.props.checkOrUncheck}></input>
-                    <label htmlFor="check-task">{this.props.title}</label>
-                    <button className="add" onClick={this.handleClick}>SUPP</button>
-                </li>
-            );
-        }
-        else {
-            return (
-                <li className="form-control">
-                    <input type="checkbox" id="check-task" name="check-task" checked onChange={this.props.checkOrUncheck}></input>
-                    <label htmlFor="check-task">{this.props.title}</label>
-                    <button className="add" onClick={this.handleClick}>SUPP</button>
-                </li>
-            );
-        }
+        console.log('Tasks', this.props);
+
+        return (
+            <li className="form-control">
+                <input type="checkbox" id="check-task" name="check-task" checked={this.props.isChecked} onChange={this.props.checkOrUncheck}></input>
+                <label htmlFor="check-task">{this.props.title}</label>
+                <button className="add" ><img class="mouv" src={haut} alt="haut"></img></button>
+                <button className="add" ><img class="mouv" src={bas} alt="bas"></img></button>
+                <button className="add" onClick={this.handleClick}><img class="poubelle" src={poubelle} alt="poubelle"></img></button>
+            </li>
+        );
     }
 }
 

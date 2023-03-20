@@ -27,15 +27,31 @@ body{
     margin-top: 10em;
 }
 
+.poubelle, .mouv{
+    height: 1.5em;
+    width: 1.5em;
+}
+
 .form-control {
     font-family: system-ui, sans-serif;
     font-size: 2rem;
     font-weight: bold;
     line-height: 1.1;
     display: flex;
+    justify-content: center;
     grid-template-columns: 1em auto;
     gap: 0.5em;
   }
+
+.form-control label {
+  width: 30vw;
+  overflow-wrap: break-word;
+}
+
+.form-control button {
+  background: transparent;
+  border: none;
+}
 
   input[type="checkbox"] {
     -webkit-appearance: none;
