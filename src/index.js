@@ -101,20 +101,18 @@ class Tasks extends React.Component {
     }
 
     handleClick() {
-        console.log("Tasks", this)
         this.props.suppTab();
       }
 
     render() {
-        console.log('Tasks', this.props);
 
         return (
             <li className="form-control">
                 <input type="checkbox" id="check-task" name="check-task" checked={this.props.isChecked} onChange={this.props.checkOrUncheck}></input>
                 <label htmlFor="check-task">{this.props.title}</label>
-                <button className="add" ><img class="mouv" src={haut} alt="haut"></img></button>
-                <button className="add" ><img class="mouv" src={bas} alt="bas"></img></button>
-                <button className="add" onClick={this.handleClick}><img class="poubelle" src={poubelle} alt="poubelle"></img></button>
+                <button className="add" onClick={this.props.upTask}><img className="mouv" src={haut} alt="haut"></img></button>
+                <button className="add" onClick={this.props.downTask}><img className="mouv" src={bas} alt="bas"></img></button>
+                <button className="add" onClick={this.handleClick}><img className="poubelle" src={poubelle} alt="poubelle"></img></button>
             </li>
         );
     }
@@ -161,10 +159,36 @@ class App extends React.Component {
         }
     }
 
-    addToTab(){
+    upTask(key){
 
         let newTasks = this.state.tasks.slice();
-        newTasks.push({'title': document.getElementById('add-bar').value, 'isChecked': false});
+        let save = newTasks[key - 1];
+
+        newTasks[key - 1] = newTasks[key];
+        newTasks[key] = save;
+
+        this.setState({
+            tasks: newTasks,
+        })
+    }
+
+    downTask(key){
+
+        let newTasks = this.state.tasks.slice();
+        let save = newTasks[key + 1];
+
+        newTasks[key + 1] = newTasks[key];
+        newTasks[key] = save;
+
+        this.setState({
+            tasks: newTasks,
+        })
+    }
+
+    addToTab(index){
+
+        let newTasks = this.state.tasks.slice();
+        newTasks.push({'title': (index + 1) + '.' + document.getElementById('add-bar').value, 'isChecked': false});
 
         this.setState({
             tasks: newTasks,
@@ -204,7 +228,7 @@ class App extends React.Component {
 
         return(tabb);*/
 
-        const reformattedTab = this.state.tasks.map((element, index) => <Tasks key={index} title={element.title} isChecked={element.isChecked} suppTab={() => { console.log("supp", index); this.suppToTab(index)}} checkOrUncheck={() => this.checkOrUncheck(index)}/>);
+        const reformattedTab = this.state.tasks.map((element, index) => <Tasks key={index} title={element.title} isChecked={element.isChecked} upTask={() => this.upTask(index)} downTask={() => this.downTask(index)} suppTab={() => this.suppToTab(index)} checkOrUncheck={() => this.checkOrUncheck(index)}/>);
 
         return(reformattedTab);
     }
@@ -236,7 +260,7 @@ class App extends React.Component {
                 </div>
 
                 <div className="app-footer">
-                    <Footer addTab={() => this.addToTab()}/>
+                    <Footer addTab={() => this.addToTab(this.state.tasks.length)}/>
                 </div>
             </div>
         );
