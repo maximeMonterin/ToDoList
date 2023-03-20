@@ -4,6 +4,8 @@ import './index.css';
 import poubelle from './images/poubelle-de-recyclage.png';
 import haut from './images/fleche-vers-le-haut.png';
 import bas from './images/fleche-vers-le-bas.png';
+import enter from './images/enter.png';
+import add from './images/add-task.png';
 
 
 class AddBar extends React.Component {
@@ -24,11 +26,9 @@ class AddBar extends React.Component {
 
     render() {
       return (
-        <div>
+        <div className='addbar'>
             <input id="add-bar" className="search" type="text" placeholder="Titre de votre nouvelle task"/>
-            <button className="add" onClick={this.handleClick}>
-                +
-            </button>
+            <button className="add" onClick={this.handleClick}><img className="add-button" src={add} alt="haut"/></button>
         </div>
       );
     }  
@@ -66,11 +66,28 @@ class Add extends React.Component {
 }
 
 class Search extends React.Component {
+
+    constructor() {
+        super();
+        
+        this.state = {
+          clicked: false
+        };
+        
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick() {
+        this.props.research();
+        document.getElementById("search").value = "";
+      }
+
     render() {
         return (
-            <input className="search" type="text" placeholder="Recherche par mots-clés..">
-                {/* TODO */}
-            </input>
+            <div className='search-div'>
+                <input id="search" className="search" type="text" placeholder="Recherche par mots-clés.."/>
+                <button className="add" onClick={this.handleClick}><img className="enter" src={enter} alt="enter"/></button>
+            </div>
         );
     }
 }
@@ -124,7 +141,7 @@ class Footer extends React.Component {
     }
 
     searchBar() {
-        return <Search />
+        return <Search research={this.props.research} />
     }
 
     render() {
@@ -156,6 +173,19 @@ class App extends React.Component {
                 { "title": "7.Publish", "isChecked": false },
                 { "title": "8.Pub", "isChecked": false },
                 { "title": "9.Feedback", "isChecked": false }],
+        }
+    }
+
+    research(str){
+        
+        if(str.length >= 3){
+
+            let newTasks = this.state.tasks.slice();
+            const result = newTasks.filter(task => task.title.includes(str));
+
+            this.setState({
+                tasks: result,
+            })
         }
     }
 
@@ -278,7 +308,7 @@ class App extends React.Component {
                 </div>
 
                 <div className="app-footer">
-                    <Footer addTab={() => this.addToTab(this.state.tasks.length)}/>
+                    <Footer research= {() => this.research(document.getElementById('search').value)} addTab={() => this.addToTab(this.state.tasks.length)}/>
                 </div>
             </div>
         );

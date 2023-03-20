@@ -27,7 +27,7 @@ body{
     margin-top: 10em;
 }
 
-.poubelle, .mouv{
+.poubelle, .mouv, .enter, .add-button{
     height: 1.5em;
     width: 1.5em;
 }
@@ -48,10 +48,11 @@ body{
   overflow-wrap: break-word;
 }
 
-.form-control button {
+.form-control button, .search-div button, .addbar button {
   background: transparent;
   border: none;
 }
+
 
   input[type="checkbox"] {
     -webkit-appearance: none;
