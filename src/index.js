@@ -25,7 +25,7 @@ class AddBar extends React.Component {
     render() {
       return (
         <div>
-            <input id="add-bar" className="search" type="text" placeholder="Titre de votre task"/>
+            <input id="add-bar" className="search" type="text" placeholder="Titre de votre nouvelle task"/>
             <button className="add" onClick={this.handleClick}>
                 +
             </button>
@@ -161,28 +161,40 @@ class App extends React.Component {
 
     upTask(key){
 
-        let newTasks = this.state.tasks.slice();
-        let save = newTasks[key - 1];
+        if(key !== 0){
+            let newTasks = this.state.tasks.slice();
+            let save = newTasks[key - 1];
+    
+            newTasks[key - 1] = newTasks[key];
+            newTasks[key] = save;
+    
+            this.setState({
+                tasks: newTasks,
+            })
+        }
 
-        newTasks[key - 1] = newTasks[key];
-        newTasks[key] = save;
-
-        this.setState({
-            tasks: newTasks,
-        })
+        else{
+            console.log("La tâche se situe déjà tout en haut de la ToDo !");
+        }
     }
 
     downTask(key){
 
-        let newTasks = this.state.tasks.slice();
-        let save = newTasks[key + 1];
+        if(key !== (this.state.tasks.length - 1)){
+            let newTasks = this.state.tasks.slice();
+            let save = newTasks[key + 1];
 
-        newTasks[key + 1] = newTasks[key];
-        newTasks[key] = save;
+            newTasks[key + 1] = newTasks[key];
+            newTasks[key] = save;
 
-        this.setState({
-            tasks: newTasks,
-        })
+            this.setState({
+                tasks: newTasks,
+            })
+        }
+
+        else{
+            console.log("La tâche se situe déjà tout en bas de la ToDo !");
+        }
     }
 
     addToTab(index){
