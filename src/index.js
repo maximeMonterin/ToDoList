@@ -15,17 +15,17 @@ class AddBar extends React.Component {
     }
 
     handleClick() {
-        this.setState({
-          clicked: true
-        });
+        this.props.addTab();
+        document.getElementById("add-bar").value = "";
       }
 
     render() {
       return (
         <div>
             <input id="add-bar" className="search" type="text" placeholder="Titre de votre todo"/>
-            <button className="add" onClick={() => this.handleClick}>+</button>
-            {this.state.clicked ? this.props.addTab : null}
+            <button className="add" onClick={this.handleClick}>
+                +
+            </button>
         </div>
       );
     }  
@@ -91,13 +91,25 @@ class Header extends React.Component {
 }
 
 class Tasks extends React.Component {
-    render() {
 
+    constructor(props) {
+        super(props)
+        this.handleClick = this.handleClick.bind(this)
+    }
+
+    handleClick() {
+        console.log("Tasks", this)
+        this.props.suppTab();
+      }
+
+    render() {
+        console.log('Tasks', this.props)
         if (this.props.isChecked === false) {
             return (
                 <li className="form-control">
                     <input type="checkbox" id="check-task" name="check-task" onChange={this.props.checkOrUncheck}></input>
                     <label htmlFor="check-task">{this.props.title}</label>
+                    <button className="add" onClick={this.handleClick}>SUPP</button>
                 </li>
             );
         }
@@ -106,6 +118,7 @@ class Tasks extends React.Component {
                 <li className="form-control">
                     <input type="checkbox" id="check-task" name="check-task" checked onChange={this.props.checkOrUncheck}></input>
                     <label htmlFor="check-task">{this.props.title}</label>
+                    <button className="add" onClick={this.handleClick}>SUPP</button>
                 </li>
             );
         }
@@ -154,10 +167,18 @@ class App extends React.Component {
     }
 
     addToTab(){
-        console.log('test');
-        
+
         let newTasks = this.state.tasks.slice();
         newTasks.push({'title': document.getElementById('add-bar').value, 'isChecked': false});
+
+        this.setState({
+            tasks: newTasks,
+        })
+    }
+
+    suppToTab(key){
+        let newTasks = this.state.tasks.slice();
+        newTasks.splice(key, 1);
 
         this.setState({
             tasks: newTasks,
@@ -188,7 +209,7 @@ class App extends React.Component {
 
         return(tabb);*/
 
-        const reformattedTab = this.state.tasks.map((element, index) => <Tasks key={index} title={element.title} isChecked={element.isChecked} checkOrUncheck={() => this.checkOrUncheck(index)}/>);
+        const reformattedTab = this.state.tasks.map((element, index) => <Tasks key={index} title={element.title} isChecked={element.isChecked} suppTab={() => { console.log("supp", index); this.suppToTab(index)}} checkOrUncheck={() => this.checkOrUncheck(index)}/>);
 
         return(reformattedTab);
     }
