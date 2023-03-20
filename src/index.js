@@ -199,12 +199,18 @@ class App extends React.Component {
 
     addToTab(index){
 
-        let newTasks = this.state.tasks.slice();
-        newTasks.push({'title': (index + 1) + '.' + document.getElementById('add-bar').value, 'isChecked': false});
-
-        this.setState({
-            tasks: newTasks,
-        })
+        if(document.getElementById('add-bar').value !== ""){
+            let newTasks = this.state.tasks.slice();
+            newTasks.push({'title': (index + 1) + '.' + document.getElementById('add-bar').value, 'isChecked': false});
+    
+            this.setState({
+                tasks: newTasks,
+            })
+        }
+        
+        else{
+            console.log("Veuillez ajouter un titre pour votre nouvelle tâche");
+        }
     }
 
     suppToTab(key){
