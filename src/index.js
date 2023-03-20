@@ -163,16 +163,7 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            tasks: [
-                { "title": "1.Idée", "isChecked": true },
-                { "title": "2.Marché", "isChecked": true },
-                { "title": "3.Wireframe", "isChecked": true },
-                { "title": "4.Design", "isChecked": true },
-                { "title": "5.Landingpage", "isChecked": true },
-                { "title": "6.Développement", "isChecked": false },
-                { "title": "7.Publish", "isChecked": false },
-                { "title": "8.Pub", "isChecked": false },
-                { "title": "9.Feedback", "isChecked": false }],
+            tasks: JSON.parse(localStorage.getItem('tasks')),
         }
     }
 
@@ -186,6 +177,7 @@ class App extends React.Component {
             this.setState({
                 tasks: result,
             })
+            
         }
     }
 
@@ -201,6 +193,8 @@ class App extends React.Component {
             this.setState({
                 tasks: newTasks,
             })
+
+            localStorage.setItem('tasks', JSON.stringify(newTasks));
         }
 
         else{
@@ -220,6 +214,8 @@ class App extends React.Component {
             this.setState({
                 tasks: newTasks,
             })
+
+            localStorage.setItem('tasks', JSON.stringify(newTasks));
         }
 
         else{
@@ -230,12 +226,18 @@ class App extends React.Component {
     addToTab(index){
 
         if(document.getElementById('add-bar').value !== ""){
-            let newTasks = this.state.tasks.slice();
+            let newTasks = [];
+            if(this.state.tasks !== null){
+                newTasks = this.state.tasks.slice();
+            }
+
             newTasks.push({'title': (index + 1) + '.' + document.getElementById('add-bar').value, 'isChecked': false});
     
             this.setState({
                 tasks: newTasks,
             })
+
+            localStorage.setItem('tasks', JSON.stringify(newTasks));
         }
         
         else{
@@ -250,6 +252,8 @@ class App extends React.Component {
         this.setState({
             tasks: newTasks,
         })
+
+        localStorage.setItem('tasks', JSON.stringify(newTasks));
     }
 
     checkOrUncheck(position){
@@ -275,23 +279,29 @@ class App extends React.Component {
         }
 
         return(tabb);*/
-
-        const reformattedTab = this.state.tasks.map((element, index) => <Tasks key={index} title={element.title} isChecked={element.isChecked} upTask={() => this.upTask(index)} downTask={() => this.downTask(index)} suppTab={() => this.suppToTab(index)} checkOrUncheck={() => this.checkOrUncheck(index)}/>);
-
-        return(reformattedTab);
+        if(this.state.tasks !== null){
+            const reformattedTab = this.state.tasks.map((element, index) => <Tasks key={index} title={element.title} isChecked={element.isChecked} upTask={() => this.upTask(index)} downTask={() => this.downTask(index)} suppTab={() => this.suppToTab(index)} checkOrUncheck={() => this.checkOrUncheck(index)}/>);
+            return(reformattedTab);
+        }
     }
 
     howMuchChecked() {
 
         var cpt = 0;
 
-        for (let parcours = 0; parcours < this.state.tasks.length; ++parcours) {
-            if (this.state.tasks[parcours]["isChecked"] === true) {
-                ++cpt;
+        if(this.state.tasks !== null){
+            for (let parcours = 0; parcours < this.state.tasks.length; ++parcours) {
+                if (this.state.tasks[parcours]["isChecked"] === true) {
+                    ++cpt;
+                }
             }
+    
+            return (cpt);
         }
 
-        return (cpt);
+        else{
+            console.log("error");
+        }
     }
 
     render() {
@@ -300,7 +310,7 @@ class App extends React.Component {
 
             <div className="app">
                 <div className="app-header">
-                    <Header done={this.howMuchChecked()} all={this.state.tasks.length} />
+                    <Header done={this.howMuchChecked()} all={this.state.tasks !== null ? this.state.tasks.length: null} />
                 </div>
 
                 <div className="corps">
@@ -308,7 +318,7 @@ class App extends React.Component {
                 </div>
 
                 <div className="app-footer">
-                    <Footer research= {() => this.research(document.getElementById('search').value)} addTab={() => this.addToTab(this.state.tasks.length)}/>
+                    <Footer research= {() => this.research(document.getElementById('search').value)} addTab={() => this.addToTab(this.state.tasks !== null ? this.state.tasks.length: null)}/>
                 </div>
             </div>
         );
