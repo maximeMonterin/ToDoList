@@ -268,17 +268,6 @@ class App extends React.Component {
     }
 
     parseTasks() {
-        //LOCAL STORAGE A FAIRE A LA FIN
-        /*let tabb = [];
-        let tab = localStorage.getItem('tasks');
-        tab = JSON.parse(tab);
-
-        for(var element in tab){
-            tabb.push(<Tasks key={element} title={tab[element].title} isChecked={tab[element].isChecked} checkOrUncheck={() => this.checkOrUncheck(element)}/>);
-            console.log(element);
-        }
-
-        return(tabb);*/
         if(this.state.tasks !== null){
             const reformattedTab = this.state.tasks.map((element, index) => <Tasks key={index} title={element.title} isChecked={element.isChecked} upTask={() => this.upTask(index)} downTask={() => this.downTask(index)} suppTab={() => this.suppToTab(index)} checkOrUncheck={() => this.checkOrUncheck(index)}/>);
             return(reformattedTab);
